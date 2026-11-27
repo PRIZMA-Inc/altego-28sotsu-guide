@@ -203,6 +203,12 @@ ul.list{margin:10px 0 0;padding-left:1.3em} ul.list li{margin-top:4px}
 .tpl button{position:absolute;top:10px;right:10px;font:inherit;font-size:.8rem;background:var(--fg);color:var(--bg);border:0;border-radius:4px;padding:4px 12px;cursor:pointer}
 .tpl button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 mark{background:var(--warn-soft);color:var(--warn);padding:0 2px;border-radius:2px}
+.testinfo{margin-top:18px;background:var(--surface);border:1px solid var(--blue);border-radius:8px;padding:14px 18px}
+.testinfo .ti-h{font-family:var(--ff-head);font-weight:700;color:var(--blue)}
+.testinfo dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 16px;margin:8px 0 0;font-size:.9rem}
+.testinfo dt{color:var(--muted)} .testinfo dd{margin:0;overflow-wrap:anywhere}
+.testinfo dd a{color:var(--blue)} .testinfo .mono{font-family:var(--ff-mono)}
+.testinfo .ti-n{font-size:.8rem;color:var(--muted);margin-top:8px}
 footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem}
 @media (prefers-reduced-motion:no-preference){.panel{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
 </style>
@@ -239,6 +245,17 @@ footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:v
 <section class="panel" id="hr" role="tabpanel" aria-labelledby="tab-hr">
   <h2>人事への案内</h2>
   <p class="panel-sub" style="margin-top:8px">人事面談の場で受検をお願いし、2次面接までに結果がそろう状態をつくってください。</p>
+  <div class="testinfo">
+    <p class="ti-h">28卒のテスト情報（作成済み）</p>
+    <dl>
+      <dt>テスト名</dt><dd>株式会社PRIZMA｜28卒新卒採用</dd>
+      <dt>受検期間</dt><dd>2026/11/01 〜 2027/12/31</dd>
+      <dt>ログインURL</dt><dd><a href="https://exam.fit.altego.co.jp/?companyId=67666341890&amp;testId=exm_mwykgm0wb88c265bfd">https://exam.fit.altego.co.jp/?companyId=67666341890&amp;testId=exm_mwykgm0wb88c265bfd</a></dd>
+      <dt>企業ID</dt><dd class="mono">67666341890</dd>
+      <dt>テストID</dt><dd class="mono">exm_mwykgm0wb88c265bfd</dd>
+    </dl>
+    <p class="ti-n">受検期間はシステム上の受付期間です。学生ごとの締切（2次面接の2営業日前）は、案内メールの「受検期限」で伝えます。</p>
+  </div>
 
   <h3>スケジュールのイメージ</h3>
   <div class="tl" role="img" aria-label="人事面談から2次面接までのスケジュール">
@@ -373,7 +390,7 @@ footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:v
   </div>
 
   <h3>案内文テンプレート</h3>
-  <p class="panel-sub" style="margin-top:4px"><mark>【　】</mark> の部分を差し替えて送ってください。企業ID・テストIDは管理画面の「案内コピー」に入っています。</p>
+  <p class="panel-sub" style="margin-top:4px"><mark>【　】</mark> の部分（学生氏名・受検期限・署名）を差し替えて送ってください。ログインURL・企業ID・テストIDは28卒のテスト情報を入れてあります。</p>
   <div class="tpl">
     <button type="button" id="copy-btn">コピー</button>
 <pre id="tpl-text">件名：【PRIZMA】適性検査（Altego Fit）受検のお願い
@@ -390,11 +407,11 @@ footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:v
 
 ■ 受検の手順
 1. 下記URLを開き、「初めての方はこちら（アカウント登録）」から登録してください
-   【回答画面URL】
+   https://exam.fit.altego.co.jp/?companyId=67666341890&amp;testId=exm_mwykgm0wb88c265bfd
 2. 登録したメールアドレスに承認メールが届きます。24時間以内にリンクをクリックしてください
 3. ログイン画面で、メールアドレス・パスワードと、以下の2つのIDを入力してください
-   企業ID：【企業ID】
-   テストID：【テストID】
+   企業ID：67666341890
+   テストID：exm_mwykgm0wb88c265bfd
 4. 利用規約に同意して、回答を始めてください
    ※下段のチェック（データの活用）は任意です。チェックしなくても選考には一切影響しません
 
@@ -409,6 +426,17 @@ footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:v
 <section class="panel" id="ops" role="tabpanel" aria-labelledby="tab-ops" hidden>
   <h2>人事のAltego操作フロー</h2>
   <p class="panel-sub" style="margin-top:8px">管理画面で人事が行う操作を、選考の流れに沿って並べています。</p>
+  <div class="testinfo">
+    <p class="ti-h">28卒のテスト情報（作成済み）</p>
+    <dl>
+      <dt>テスト名</dt><dd>株式会社PRIZMA｜28卒新卒採用</dd>
+      <dt>受検期間</dt><dd>2026/11/01 〜 2027/12/31</dd>
+      <dt>ログインURL</dt><dd><a href="https://exam.fit.altego.co.jp/?companyId=67666341890&amp;testId=exm_mwykgm0wb88c265bfd">https://exam.fit.altego.co.jp/?companyId=67666341890&amp;testId=exm_mwykgm0wb88c265bfd</a></dd>
+      <dt>企業ID</dt><dd class="mono">67666341890</dd>
+      <dt>テストID</dt><dd class="mono">exm_mwykgm0wb88c265bfd</dd>
+    </dl>
+    <p class="ti-n">受検期間はシステム上の受付期間です。学生ごとの締切（2次面接の2営業日前）は、案内メールの「受検期限」で伝えます。</p>
+  </div>
 
   <h3>全体の流れ（誰が何をするか）</h3>
   <div class="lane-wrap" role="img" aria-label="人事・学生・システム・リクルーターの役割分担">
@@ -450,26 +478,26 @@ footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:v
   <p class="phase">② 受検の作成と案内（人事面談のあと）</p>
   <div class="rows">
     <div class="row">
-      <div class="txt"><span class="num">3</span><div><p class="t">受検を作成する<span class="who hr">人事</span></p><p class="d">「受検管理」→「新規受検を作成する」。<br>タイトルは <b>PRIZMA｜28卒_営業</b> のように年度が分かる名前に。<br>受検対象者は<b>新卒社員（求職者）</b>（「自社社員」を選ぶと社員として登録されてしまいます）。<br>受検期間の締切は<b>2次面接の2営業日前</b>。</p></div></div>
+      <div class="txt"><span class="num">3</span><div><p class="t">受検を作成する<span class="who hr">人事</span><span class="who st">作成済み</span></p><p class="d">28卒は <b>株式会社PRIZMA｜28卒新卒採用</b>（受検期間 2026/11/01〜2027/12/31）として作成済みです。28卒の学生は全員この1つのテストで受けます。<br>別の採用で新しく作るときは「受検管理」→「新規受検を作成する」から。受検対象者は<b>新卒社員（求職者）</b>を選びます（「自社社員」を選ぶと社員として登録されてしまいます）。</p></div></div>
       <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit 管理画面 ｜ 新規受検作成</span></div>
         <div class="admin">
           <div class="side"><div>ダッシュボード</div><div class="on">受検管理</div><div>求職者管理</div><div>自社社員管理</div><div>設定</div></div>
           <div class="main"><p class="m-title">新規受検を作成する</p>
-            <div class="m-field"><label>タイトル</label><div class="m-input">PRIZMA｜28卒_営業</div></div>
+            <div class="m-field"><label>タイトル</label><div class="m-input">株式会社PRIZMA｜28卒新卒採用</div></div>
             <div class="m-field"><label>受検対象者</label><div class="m-input hl">新卒社員（求職者） ▾</div></div>
-            <div class="m-field"><label>受検期間</label><div class="m-input">◯/◯ 〜 ◯/◯（2次面接の2営業日前）</div></div>
+            <div class="m-field"><label>受検期間</label><div class="m-input">2026/11/01 〜 2027/12/31</div></div>
             <span class="m-btn">受検を作成する</span>
           </div>
         </div></div>
     </div>
     <div class="row">
-      <div class="txt"><span class="num">4</span><div><p class="t">案内文をコピーして送る<span class="who hr">人事</span></p><p class="d">受検依頼一覧の「案内コピー」で、企業ID・テストID入りの案内文が取れます。「学生の受検ワークフロー」タブのテンプレートに差し込んで送ります。</p></div></div>
+      <div class="txt"><span class="num">4</span><div><p class="t">案内文をコピーして送る<span class="who hr">人事</span></p><p class="d">「学生の受検ワークフロー」タブのテンプレートには、ログインURL・企業ID・テストIDを入れてあります。学生氏名と受検期限（2次面接の2営業日前）を入れて送ります。</p></div></div>
       <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit 管理画面 ｜ 受検依頼一覧</span></div>
         <div class="admin">
           <div class="side"><div>ダッシュボード</div><div class="on">受検管理</div><div>求職者管理</div><div>自社社員管理</div><div>設定</div></div>
           <div class="main"><p class="m-title">受検依頼一覧</p>
             <table class="m-table"><tr><th>受検名</th><th>テストID</th><th>案内</th></tr>
-              <tr class="hl"><td>PRIZMA｜28卒_営業</td><td>自動発行</td><td><span class="m-btn ghost" style="padding:0 6px;font-size:.6rem">案内コピー</span></td></tr>
+              <tr class="hl"><td>株式会社PRIZMA｜28卒新卒採用</td><td>exm_mwykgm0wb88c265bfd</td><td><span class="m-btn ghost" style="padding:0 6px;font-size:.6rem">案内コピー</span></td></tr>
             </table></div>
         </div></div>
     </div>
@@ -484,7 +512,7 @@ footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:v
           <div class="side"><div class="on">ダッシュボード</div><div>受検管理</div><div>求職者管理</div><div>自社社員管理</div><div>設定</div></div>
           <div class="main"><p class="m-title">新着の受検完了者</p><div class="m-tabs"><span class="on">求職者</span><span>自社社員</span></div>
             <table class="m-table"><tr><th>名前</th><th>受検名</th><th>完了日</th></tr>
-              <tr><td>学生A</td><td>28卒_営業</td><td>◯/◯</td></tr><tr><td>学生B</td><td>28卒_営業</td><td>◯/◯</td></tr></table></div>
+              <tr><td>学生A</td><td>28卒新卒採用</td><td>◯/◯</td></tr><tr><td>学生B</td><td>28卒新卒採用</td><td>◯/◯</td></tr></table></div>
         </div></div>
     </div>
   </div>
@@ -543,7 +571,6 @@ footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:v
     <li>リクルーターに管理画面のアカウントを発行するか、人事がレポートを書き出して渡すか</li>
     <li>JOB選考・未来プレゼン・最終面接の担当者に、Altego の結果をどこまで見せるか</li>
     <li>「優秀人材」タグをどの社員に付けるか（活躍期待度の基準になる）</li>
-    <li>回答画面のURL・企業IDなど、テンプレートの差し込み値</li>
   </ul>
 </section>
 
