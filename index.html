@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>28卒 Altego運用ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: header + flow strip, then 3 tabs (HR guidance / student workflow / HR operation flow); each step pairs text with a simplified screen mock */
+:root{
+  --bg:#f6f8fa; --surface:#ffffff; --fg:#17222e; --muted:#5a6878; --line:#dde3ea; --sunk:#eef2f6;
+  --blue:#1f62c4; --green:#14917a; --blue-soft:#e8f0fb; --green-soft:#e4f4f0;
+  --warn:#b4581a; --warn-soft:#fbefe4; --ng:#b3261e; --ng-soft:#fbe9e7;
+  --ff-head:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  --ff-body:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  --ff-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10161d; --surface:#18212b; --fg:#e4eaf1; --muted:#9aa8b8; --line:#2a3542; --sunk:#131a22;
+  --blue:#6fa4f0; --green:#4cc4a8; --blue-soft:#1b2c44; --green-soft:#16332e;
+  --warn:#f0a066; --warn-soft:#3a2818; --ng:#f2887f; --ng-soft:#3d1f1d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10161d; --surface:#18212b; --fg:#e4eaf1; --muted:#9aa8b8; --line:#2a3542; --sunk:#131a22;
+  --blue:#6fa4f0; --green:#4cc4a8; --blue-soft:#1b2c44; --green-soft:#16332e;
+  --warn:#f0a066; --warn-soft:#3a2818; --ng:#f2887f; --ng-soft:#3d1f1d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--ff-body);font-size:15px;line-height:1.8;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:960px;margin:0 auto}
+h1,h2,h3{font-family:var(--ff-head);text-wrap:balance;line-height:1.4;margin:0}
+h1{font-size:1.9rem} h2{font-size:1.45rem} h3{font-size:1.08rem;margin-top:32px}
+p{margin:0}
+header{padding-block:40px 8px}
+.eyebrow{font-family:var(--ff-mono);font-size:.75rem;letter-spacing:.12em;color:var(--green);text-transform:uppercase}
+header .lead{color:var(--muted);margin-top:10px;max-width:65ch}
+.band{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--green));width:96px;margin-top:18px}
+
+/* flow strip */
+.flow{margin-top:24px;overflow-x:auto}
+.flow ol{list-style:none;margin:0;padding:0;display:flex;gap:6px;min-width:640px}
+.flow li{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 8px;text-align:center;font-size:.82rem;line-height:1.4}
+.flow li b{display:block;font-family:var(--ff-head);font-size:.92rem;margin-bottom:2px}
+.flow li span{color:var(--muted)}
+.flow li.alt{background:var(--blue-soft);border-color:var(--blue)} .flow li.alt b{color:var(--blue)}
+.flow li.main{background:var(--green-soft);border-color:var(--green)} .flow li.main b{color:var(--green)}
+.flow-note{font-size:.85rem;color:var(--muted);margin-top:10px}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-top:24px;border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.tabs button{font:inherit;font-family:var(--ff-head);font-weight:700;font-size:.95rem;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);padding:12px 14px 10px;cursor:pointer;white-space:nowrap}
+.tabs button .n{font-family:var(--ff-mono);font-size:.8rem;margin-right:6px}
+.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--green)}
+.tabs button[aria-selected="true"] .n{color:var(--green)}
+.tabs button:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.panel{padding-top:28px}
+.panel-sub{color:var(--muted);max-width:65ch}
+
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin-top:12px}
+.tbl{overflow-x:auto}
+th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+th{font-weight:700;background:var(--surface);white-space:nowrap}
+td:first-child{white-space:nowrap;font-weight:500}
+ul.list{margin:10px 0 0;padding-left:1.3em} ul.list li{margin-top:4px}
+
+.callout{border-radius:6px;padding:14px 16px;margin-top:16px;font-size:.92rem}
+.callout strong{display:block;font-family:var(--ff-head);margin-bottom:4px}
+.callout.warn{background:var(--warn-soft)} .callout.warn strong{color:var(--warn)}
+.callout.ng{background:var(--ng-soft)} .callout.ng strong{color:var(--ng)}
+.note-img{font-size:.78rem;color:var(--muted);margin-top:6px}
+
+/* timeline diagram */
+.tl{margin-top:16px;overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px 18px 18px}
+.tl-track{position:relative;display:grid;grid-template-columns:repeat(6,1fr);min-width:660px}
+.tl-track::before{content:"";position:absolute;left:8%;right:8%;top:19px;height:3px;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:2px}
+.tl-pt{position:relative;text-align:center;padding:0 4px}
+.tl-dot{width:40px;height:40px;border-radius:50%;margin:0 auto;display:grid;place-items:center;background:var(--surface);border:3px solid var(--blue);font-size:1.05rem}
+.tl-pt.goal .tl-dot{border-color:var(--green);background:var(--green-soft)}
+.tl-pt.key .tl-dot{border-color:var(--warn);background:var(--warn-soft)}
+.tl-when{font-family:var(--ff-mono);font-size:.72rem;color:var(--muted);margin-top:8px}
+.tl-what{font-family:var(--ff-head);font-weight:700;font-size:.88rem;line-height:1.4;margin-top:2px}
+.tl-who{font-size:.75rem;color:var(--muted);line-height:1.4;margin-top:2px}
+.tl-gap{margin-top:16px;display:flex;justify-content:flex-end;min-width:660px}
+.tl-gap span{font-size:.78rem;color:var(--warn);border:1px dashed var(--warn);border-radius:4px;padding:2px 10px}
+
+/* speech */
+.talk{display:grid;grid-template-columns:56px 1fr;gap:14px;margin-top:14px;align-items:start}
+.avatar{width:56px;height:56px;border-radius:50%;background:var(--blue-soft);display:grid;place-items:center;font-family:var(--ff-head);font-weight:700;color:var(--blue);font-size:.85rem;text-align:center;line-height:1.2}
+.bubble{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:.93rem;min-width:0}
+.bubble::before{content:"";position:absolute;left:-8px;top:20px;width:14px;height:14px;background:var(--surface);border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.bubble p+p{margin-top:8px}
+
+/* do / don't */
+.dd{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px}
+.dd>div{border-radius:8px;padding:14px 16px;font-size:.9rem;min-width:0}
+.dd .do{background:var(--green-soft)} .dd .dont{background:var(--ng-soft)}
+.dd h4{margin:0 0 6px;font-family:var(--ff-head);font-size:.95rem}
+.dd .do h4{color:var(--green)} .dd .dont h4{color:var(--ng)}
+.dd ul{margin:0;padding-left:1.2em} .dd li{margin-top:3px}
+
+/* step + mock rows */
+.rows{display:grid;gap:14px;margin-top:16px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:20px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;align-items:center}
+@media (max-width:720px){.row{grid-template-columns:1fr}}
+.row .txt{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.num{font-family:var(--ff-mono);width:30px;height:30px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;font-size:.85rem}
+.row .t{font-family:var(--ff-head);font-weight:700;font-size:1rem;line-height:1.5}
+.row .d{color:var(--muted);font-size:.9rem;margin-top:4px}
+.row .d b{color:var(--fg)}
+.who{display:inline-block;font-size:.7rem;font-family:var(--ff-mono);border-radius:4px;padding:0 6px;margin-left:6px;vertical-align:2px;border:1px solid currentColor;font-weight:500}
+.who.hr{color:var(--blue)} .who.st{color:var(--green)} .who.sys{color:var(--muted)}
+.phase{font-family:var(--ff-head);font-weight:700;font-size:.85rem;color:var(--green);margin-top:30px;display:flex;align-items:center;gap:10px}
+.phase::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* mock screens (simplified) */
+.mock{border:1px solid var(--line);border-radius:8px;background:var(--bg);overflow:hidden;font-size:.74rem;line-height:1.5;min-width:0}
+.mock-bar{display:flex;align-items:center;gap:5px;padding:6px 10px;background:var(--sunk);border-bottom:1px solid var(--line)}
+.mock-bar i{width:7px;height:7px;border-radius:50%;background:var(--line);display:block}
+.mock-bar span{margin-left:8px;font-family:var(--ff-mono);font-size:.66rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mock-body{padding:12px 14px;display:grid;gap:7px}
+.m-title{font-family:var(--ff-head);font-weight:700;font-size:.85rem}
+.m-field{display:grid;gap:2px}
+.m-field label{color:var(--muted);font-size:.68rem}
+.m-input{height:22px;border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:0 8px;display:flex;align-items:center;color:var(--muted);font-size:.7rem}
+.m-input.hl{border-color:var(--blue);background:var(--blue-soft);color:var(--blue);font-weight:700}
+.m-btn{justify-self:start;background:var(--fg);color:var(--bg);border-radius:4px;padding:3px 14px;font-weight:700;font-size:.72rem}
+.m-btn.green{background:var(--green);color:var(--surface)}
+.m-btn.ghost{background:none;color:var(--blue);border:1px solid var(--blue)}
+.m-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.m-muted{color:var(--muted)}
+.m-link{color:var(--blue);text-decoration:underline}
+.m-check{display:flex;gap:6px;align-items:flex-start}
+.m-box{flex:none;width:12px;height:12px;border:1.5px solid var(--muted);border-radius:2px;margin-top:2px;display:grid;place-items:center;font-size:.6rem;line-height:1}
+.m-box.on{background:var(--green);border-color:var(--green);color:var(--surface)}
+.m-tag{display:inline-block;font-size:.62rem;border-radius:3px;padding:0 5px;font-weight:700}
+.m-tag.req{background:var(--ng-soft);color:var(--ng)} .m-tag.opt{background:var(--sunk);color:var(--muted)}
+.m-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.m-stats div{background:var(--surface);border:1px solid var(--line);border-radius:4px;text-align:center;padding:4px}
+.m-stats b{display:block;font-family:var(--ff-mono);font-size:.95rem}
+.m-stats span{color:var(--muted);font-size:.62rem}
+.m-prog{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;font-family:var(--ff-mono);font-size:.58rem;color:var(--muted);text-align:center}
+.m-prog div{border-top:4px solid var(--line);padding-top:2px}
+.m-prog .done{border-top-color:var(--green);color:var(--green)}
+.m-prog .now{border-top-color:var(--blue);color:var(--blue)}
+.m-q{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:8px}
+.m-opts{display:grid;gap:3px;margin-top:6px}
+.m-opt{border:1px solid var(--line);border-radius:3px;padding:1px 8px;background:var(--bg)}
+.m-opt.sel{border-color:var(--blue);background:var(--blue-soft);color:var(--blue);font-weight:700}
+.m-nav{display:flex;justify-content:space-between;align-items:center}
+.m-nav span.arrow{border:1px solid var(--line);border-radius:4px;padding:0 10px;background:var(--surface)}
+.m-acc{border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:3px 8px;display:flex;justify-content:space-between}
+.m-acc b{color:var(--green)}
+.mail{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:8px}
+.mail .from{color:var(--muted);font-size:.66rem}
+.timer{display:inline-flex;align-items:center;gap:4px;color:var(--warn);font-weight:700;font-size:.7rem;background:var(--warn-soft);border-radius:3px;padding:0 6px}
+
+/* admin mock */
+.admin{display:grid;grid-template-columns:92px 1fr;min-height:150px}
+.side{background:var(--sunk);border-right:1px solid var(--line);padding:8px 6px;display:grid;gap:3px;align-content:start;font-size:.64rem}
+.side div{padding:2px 6px;border-radius:3px;color:var(--muted);white-space:nowrap}
+.side .on{background:var(--blue-soft);color:var(--blue);font-weight:700}
+.side .cnt{margin-top:14px;border:1px solid var(--line);background:var(--surface);text-align:center;color:var(--fg)}
+.side .cnt b{display:block;font-family:var(--ff-mono);font-size:.9rem}
+.admin .main{padding:10px 12px;display:grid;gap:6px;align-content:start;min-width:0}
+.m-table{width:100%;border-collapse:collapse;font-size:.64rem;margin:0}
+.m-table th,.m-table td{border-bottom:1px solid var(--line);padding:3px 4px;background:none;font-weight:400;white-space:nowrap}
+.m-table th{color:var(--muted)}
+.m-table td:first-child{font-weight:400}
+.m-table .sc{font-family:var(--ff-mono);font-weight:700}
+.m-table tr.hl td{background:var(--blue-soft)}
+.m-tabs{display:flex;gap:2px;border-bottom:1px solid var(--line)}
+.m-tabs span{padding:2px 8px;font-size:.66rem;color:var(--muted)}
+.m-tabs span.on{color:var(--fg);font-weight:700;border-bottom:2px solid var(--green)}
+.m-lines{display:grid;gap:4px}
+.m-lines i{display:block;height:6px;border-radius:3px;background:var(--line)}
+.m-chat{display:grid;gap:5px}
+.m-chat .q{justify-self:end;background:var(--blue-soft);color:var(--blue);border-radius:8px 8px 2px 8px;padding:3px 8px;max-width:85%}
+.m-chat .a{justify-self:start;background:var(--surface);border:1px solid var(--line);border-radius:8px 8px 8px 2px;padding:3px 8px;max-width:85%}
+.m-paper{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:8px;display:grid;gap:5px}
+.m-paper .h{font-family:var(--ff-head);font-weight:700}
+.m-paper .li{display:flex;gap:6px}
+.m-paper .li::before{content:"□";color:var(--green)}
+
+/* swimlane */
+.lane-wrap{margin-top:16px;overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.lanes{display:grid;grid-template-columns:96px repeat(5,minmax(118px,1fr));min-width:720px;font-size:.78rem}
+.lanes>div{border-bottom:1px solid var(--line);padding:8px;min-height:58px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.4}
+.lanes .hd{font-family:var(--ff-head);font-weight:700;color:var(--muted);font-size:.74rem;min-height:0;background:var(--sunk)}
+.lanes .who-cell{font-family:var(--ff-head);font-weight:700;justify-content:flex-start;background:var(--sunk);border-right:1px solid var(--line)}
+.lanes .card{display:inline-block;border-radius:5px;padding:5px 8px;font-weight:500}
+.lanes .c-hr{background:var(--blue-soft);color:var(--blue)}
+.lanes .c-st{background:var(--green-soft);color:var(--green)}
+.lanes .c-sys{background:var(--sunk);color:var(--muted);border:1px dashed var(--line)}
+.lanes .c-rc{background:var(--warn-soft);color:var(--warn)}
+.lanes>div:nth-last-child(-n+6){border-bottom:0}
+
+/* template */
+.tpl{position:relative;margin-top:14px}
+.tpl pre{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;white-space:pre-wrap;font-family:var(--ff-body);font-size:.9rem;line-height:1.75;margin:0}
+.tpl button{position:absolute;top:10px;right:10px;font:inherit;font-size:.8rem;background:var(--fg);color:var(--bg);border:0;border-radius:4px;padding:4px 12px;cursor:pointer}
+.tpl button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+mark{background:var(--warn-soft);color:var(--warn);padding:0 2px;border-radius:2px}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem}
+@media (prefers-reduced-motion:no-preference){.panel{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="eyebrow">PRIZMA 28卒採用 / 社内向け</p>
+  <h1>28卒 Altego運用ガイド</h1>
+  <p class="lead">人事面談のあとに Altego を受けてもらい、その結果を2次面接（リクルーター）で使うための手順です。</p>
+  <div class="band"></div>
+  <div class="flow" aria-label="選考フロー">
+    <ol>
+      <li><b>1次面接</b><span>人事</span></li>
+      <li><b>人事面談</b><span>部署振り分け</span></li>
+      <li class="alt"><b>Altego受検</b><span>学生</span></li>
+      <li class="main"><b>2次面接</b><span>リクルーター</span></li>
+      <li><b>JOB選考</b><span>部署</span></li>
+      <li><b>未来プレゼン</b><span>横下さん</span></li>
+      <li><b>最終面接</b><span>杉本さん</span></li>
+    </ol>
+  </div>
+  <p class="flow-note">Altego の結果は<b>2次面接で使うことが主目的</b>です。部署の振り分けには使いません。</p>
+</header>
+
+<div class="tabs" role="tablist" aria-label="ガイドの切り替え">
+  <button role="tab" id="tab-hr" aria-controls="hr" aria-selected="true"><span class="n">01</span>人事への案内</button>
+  <button role="tab" id="tab-student" aria-controls="student" aria-selected="false" tabindex="-1"><span class="n">02</span>学生の受検ワークフロー</button>
+  <button role="tab" id="tab-ops" aria-controls="ops" aria-selected="false" tabindex="-1"><span class="n">03</span>人事のAltego操作フロー</button>
+</div>
+
+<!-- ============ 1 人事への案内 ============ -->
+<section class="panel" id="hr" role="tabpanel" aria-labelledby="tab-hr">
+  <h2>人事への案内</h2>
+  <p class="panel-sub" style="margin-top:8px">人事面談の場で受検をお願いし、2次面接までに結果がそろう状態をつくってください。</p>
+
+  <h3>スケジュールのイメージ</h3>
+  <div class="tl" role="img" aria-label="人事面談から2次面接までのスケジュール">
+    <div class="tl-track">
+      <div class="tl-pt"><div class="tl-dot">💬</div><p class="tl-when">DAY 0</p><p class="tl-what">人事面談</p><p class="tl-who">受検を口頭で説明</p></div>
+      <div class="tl-pt"><div class="tl-dot">✉</div><p class="tl-when">DAY 0</p><p class="tl-what">案内メール送付</p><p class="tl-who">当日中に送る</p></div>
+      <div class="tl-pt"><div class="tl-dot">🔔</div><p class="tl-when">締切 −2日</p><p class="tl-what">リマインド</p><p class="tl-who">未受検者だけ</p></div>
+      <div class="tl-pt key"><div class="tl-dot">⏱</div><p class="tl-when">締切</p><p class="tl-what">受検締切</p><p class="tl-who">2次面接の<br>2営業日前</p></div>
+      <div class="tl-pt"><div class="tl-dot">📄</div><p class="tl-when">締切 +1日</p><p class="tl-what">レポート確認</p><p class="tl-who">リクルーターへ渡す</p></div>
+      <div class="tl-pt goal"><div class="tl-dot">🤝</div><p class="tl-when">本番</p><p class="tl-what">2次面接</p><p class="tl-who">リクルーター</p></div>
+    </div>
+    <div class="tl-gap"><span>締切〜2次面接は2営業日。レポート生成（約1時間）とリクルーターが読む時間を確保</span></div>
+  </div>
+
+  <h3>人事面談で学生に伝えること（例）</h3>
+  <div class="talk">
+    <div class="avatar">人事</div>
+    <div class="bubble">
+      <p>次の2次面接の前に、Altego Fit という適性検査を受けていただきます。</p>
+      <p><b>合否を決めるためのものではなく、2次面接であなたのことをより深く知るための参考資料</b>として使います。</p>
+      <p>本音を引き出す設計なので、少し極端な状況の質問も出てきます。正解はないので、直感で答えてください。</p>
+      <p>30〜40分ほどかかります。途中で中断しても、続きから再開できます。今日中に案内メールを送りますね。</p>
+    </div>
+  </div>
+
+  <h3>学生への説明で守ること</h3>
+  <div class="dd">
+    <div class="do"><h4>伝えること</h4><ul>
+      <li>合否を決めるものではなく、2次面接の参考資料であること</li>
+      <li>同意画面の下段のチェック（データの二次利用）は<b>任意で、選考に影響しない</b>こと</li>
+      <li>受検期限と、中断・再開ができること</li>
+    </ul></div>
+    <div class="dont"><h4>しないこと</h4><ul>
+      <li>回答の中身やスコアを、学生本人に向けて話題にする</li>
+      <li>「こう答えると有利」のような助言をする（本音を測れなくなる）</li>
+      <li>設問数を案内に書く（画面と資料で数字が揃っていないため）</li>
+    </ul></div>
+  </div>
+
+  <h3>学生からよくある問い合わせ</h3>
+  <div class="tbl"><table>
+    <tr><th>問い合わせ</th><th>回答</th></tr>
+    <tr><td>登録メールが届かない</td><td>迷惑メールフォルダを確認してもらう。それでもなければ、登録したアドレスに誤りがないか確認する</td></tr>
+    <tr><td>承認リンクが切れた</td><td>リンクの有効期限は24時間。もう一度アカウント作成からやり直してもらう</td></tr>
+    <tr><td>パスワードを忘れた</td><td>ログイン画面の「パスワードをお忘れの方はこちら」から再設定できる</td></tr>
+    <tr><td>企業ID・テストIDが分からない</td><td>案内メールに記載されている。見つからなければ再送する</td></tr>
+    <tr><td>途中で止めてしまった</td><td>回答は保存されている。もう一度ログインすれば続きから再開できる</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ 2 学生 ============ -->
+<section class="panel" id="student" role="tabpanel" aria-labelledby="tab-student" hidden>
+  <h2>学生の受検ワークフロー</h2>
+  <p class="panel-sub" style="margin-top:8px">部内で受けたときと同じ流れです。準備するのは、案内を受け取ったメールアドレスと30〜40分のまとまった時間だけです。</p>
+  <p class="note-img">※ 画面は簡略化したイメージです。実際の画面とは異なります。</p>
+
+  <div class="rows">
+    <div class="row">
+      <div class="txt"><span class="num">1</span><div><p class="t">案内メールのURLを開き、アカウントを作る</p><p class="d">ログイン画面の「初めての方はこちら（アカウント登録）」から、<b>名前・メールアドレス・パスワード</b>を登録します。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit ｜ 新規アカウント登録</span></div>
+        <div class="mock-body">
+          <p class="m-title">新規アカウント登録</p>
+          <div class="m-field"><label>名前</label><div class="m-input">山田 花子</div></div>
+          <div class="m-field"><label>メールアドレス</label><div class="m-input">hanako@example.ac.jp</div></div>
+          <div class="m-row"><div class="m-field" style="flex:1"><label>パスワード</label><div class="m-input">••••••••</div></div><div class="m-field" style="flex:1"><label>パスワード（確認）</label><div class="m-input">••••••••</div></div></div>
+          <span class="m-btn">確認画面へ</span>
+        </div></div>
+    </div>
+
+    <div class="row">
+      <div class="txt"><span class="num">2</span><div><p class="t">承認メールのリンクをクリックする</p><p class="d">登録したアドレスにメールが届きます。<b>24時間以内</b>にクリックしないと無効になり、登録からやり直しになります。届かないときは迷惑メールフォルダを確認します。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>受信トレイ</span></div>
+        <div class="mock-body">
+          <div class="mail">
+            <p class="from">From: Altego Fit</p>
+            <p class="m-title">アカウント登録のご確認</p>
+            <p class="m-muted" style="margin-top:4px">以下のリンクをクリックして登録を完了してください。</p>
+            <p class="m-link" style="margin-top:4px">https://… /verify</p>
+            <p style="margin-top:6px"><span class="timer">⏱ 24時間で無効</span></p>
+          </div>
+        </div></div>
+    </div>
+
+    <div class="row">
+      <div class="txt"><span class="num">3</span><div><p class="t">ログインする</p><p class="d">メールアドレス・パスワードに加えて、<b>企業ID と テストID</b> を入力します。どちらも案内メールに書いてあります。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit ｜ ログイン</span></div>
+        <div class="mock-body">
+          <p class="m-title">ログイン</p>
+          <div class="m-row"><div class="m-field" style="flex:1"><label>メールアドレス</label><div class="m-input">hanako@example.ac.jp</div></div><div class="m-field" style="flex:1"><label>パスワード</label><div class="m-input">••••••••</div></div></div>
+          <div class="m-row"><div class="m-field" style="flex:1"><label>企業ID</label><div class="m-input hl">案内メールに記載</div></div><div class="m-field" style="flex:1"><label>テストID</label><div class="m-input hl">案内メールに記載</div></div></div>
+          <span class="m-btn">ログイン</span>
+        </div></div>
+    </div>
+
+    <div class="row">
+      <div class="txt"><span class="num">4</span><div><p class="t">利用規約に同意して開始する</p><p class="d">上段（利用規約への同意）は<b>必須</b>です。下段（データの二次利用）は<b>任意</b>で、チェックしなくても選考には影響しません。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit ｜ 開始前の確認</span></div>
+        <div class="mock-body">
+          <p class="m-title">ようこそ、Altego Fitへ。</p>
+          <div class="m-stats"><div><b>30</b><span>回答時間 / Min</span></div><div><b>—</b><span>設問数 / 問</span></div><div><b>4</b><span>ステップ / Step</span></div></div>
+          <div class="m-check"><span class="m-box on">✓</span><span><span class="m-tag req">必須</span> 利用規約に同意します</span></div>
+          <div class="m-check"><span class="m-box"></span><span><span class="m-tag opt">任意</span> 採用選考以外のALTEGO関連サービスにも活用することがあります（未チェックでも選考に影響はありません）</span></div>
+          <span class="m-btn green">テストを開始する</span>
+        </div></div>
+    </div>
+
+    <div class="row">
+      <div class="txt"><span class="num">5</span><div><p class="t">設問に回答する</p><p class="d">一問一答で、「＜」「＞」で前後に移動します。正解はないので直感で答えます。<b>途中で中断しても回答は保存され、再ログインで続きから再開できます。</b></p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit ｜ 回答</span></div>
+        <div class="mock-body">
+          <div class="m-prog"><div class="done">STEP1</div><div class="now">STEP2</div><div>STEP3</div><div>STEP4</div><div>FINISH</div></div>
+          <div class="m-q">
+            <p><b>Q.</b> 〇〇な場面で、あなたはどうしますか？</p>
+            <div class="m-opts"><span class="m-opt">A. ……</span><span class="m-opt sel">B. ……</span><span class="m-opt">C. ……</span></div>
+          </div>
+          <div class="m-nav"><span class="arrow">＜</span><span class="m-muted">途中で閉じても保存されます</span><span class="arrow">＞</span></div>
+        </div></div>
+    </div>
+
+    <div class="row">
+      <div class="txt"><span class="num">6</span><div><p class="t">最終確認画面で見直して提出する</p><p class="d">STEPごとに回答を見直して提出すれば完了です。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit ｜ 最終確認</span></div>
+        <div class="mock-body">
+          <p class="m-title">回答内容の確認</p>
+          <div class="m-acc"><span>STEP1</span><b>✓ 回答済み</b></div>
+          <div class="m-acc"><span>STEP2</span><b>✓ 回答済み</b></div>
+          <div class="m-acc"><span>STEP3</span><b>✓ 回答済み</b></div>
+          <div class="m-acc"><span>STEP4</span><b>✓ 回答済み</b></div>
+          <span class="m-btn green">提出する</span>
+        </div></div>
+    </div>
+  </div>
+
+  <h3>案内文テンプレート</h3>
+  <p class="panel-sub" style="margin-top:4px"><mark>【　】</mark> の部分を差し替えて送ってください。企業ID・テストIDは管理画面の「案内コピー」に入っています。</p>
+  <div class="tpl">
+    <button type="button" id="copy-btn">コピー</button>
+<pre id="tpl-text">件名：【PRIZMA】適性検査（Altego Fit）受検のお願い
+
+【学生氏名】さん
+
+先日は人事面談にお時間をいただき、ありがとうございました。
+次の2次面接に向けて、適性検査「Altego Fit」の受検をお願いいたします。
+
+この検査は合否を決めるものではなく、2次面接で【学生氏名】さんのことをより深く知るための参考資料として使います。正解はありませんので、直感でお答えください。
+
+■ 受検期限：【◯月◯日（◯）23:59】
+■ 所要時間：30〜40分程度（途中で中断しても、続きから再開できます）
+
+■ 受検の手順
+1. 下記URLを開き、「初めての方はこちら（アカウント登録）」から登録してください
+   【回答画面URL】
+2. 登録したメールアドレスに承認メールが届きます。24時間以内にリンクをクリックしてください
+3. ログイン画面で、メールアドレス・パスワードと、以下の2つのIDを入力してください
+   企業ID：【企業ID】
+   テストID：【テストID】
+4. 利用規約に同意して、回答を始めてください
+   ※下段のチェック（データの活用）は任意です。チェックしなくても選考には一切影響しません
+
+承認メールが届かない場合は、迷惑メールフォルダもご確認ください。
+ご不明な点があれば、このメールにご返信ください。
+
+【署名】</pre>
+  </div>
+</section>
+
+<!-- ============ 3 人事操作 ============ -->
+<section class="panel" id="ops" role="tabpanel" aria-labelledby="tab-ops" hidden>
+  <h2>人事のAltego操作フロー</h2>
+  <p class="panel-sub" style="margin-top:8px">管理画面で人事が行う操作を、選考の流れに沿って並べています。</p>
+
+  <h3>全体の流れ（誰が何をするか）</h3>
+  <div class="lane-wrap" role="img" aria-label="人事・学生・システム・リクルーターの役割分担">
+    <div class="lanes">
+      <div class="hd"></div><div class="hd">① 準備</div><div class="hd">② 作成・案内</div><div class="hd">③ 受検</div><div class="hd">④ 結果確認</div><div class="hd">⑤ 2次面接</div>
+      <div class="who-cell" style="color:var(--blue)">人事</div><div><span class="card c-hr">受検数・社員データを確認</span></div><div><span class="card c-hr">受検を作成し案内を送る</span></div><div><span class="card c-hr">完了を確認・リマインド</span></div><div><span class="card c-hr">レポートを読み、渡す</span></div><div></div>
+      <div class="who-cell" style="color:var(--green)">学生</div><div></div><div></div><div><span class="card c-st">登録して回答・提出</span></div><div></div><div></div>
+      <div class="who-cell" style="color:var(--muted)">システム</div><div></div><div></div><div></div><div><span class="card c-sys">約1時間でレポート生成</span></div><div></div>
+      <div class="who-cell" style="color:var(--warn)">リクルーター</div><div></div><div></div><div></div><div></div><div><span class="card c-rc">面接対策を見て面接</span></div>
+    </div>
+  </div>
+  <p class="note-img">※ 以下の画面は簡略化したイメージです。数値・氏名はダミーです。</p>
+
+  <p class="phase">① 準備（28卒の受検を始める前に1回）</p>
+  <div class="rows">
+    <div class="row">
+      <div class="txt"><span class="num">1</span><div><p class="t">管理画面にログインし、受検数の残りを確認する<span class="who hr">人事</span></p><p class="d">操作する人事メンバー全員分のアカウントを用意します。残りの受検数は左メニュー下部に出ます。<b>1人受検するごとに1つ減り</b>、社員の受検も同じ枠から消費されます。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit 管理画面 ｜ ダッシュボード</span></div>
+        <div class="admin">
+          <div class="side"><div class="on">ダッシュボード</div><div>受検管理</div><div>求職者管理</div><div>自社社員管理</div><div>設定</div><div class="cnt">残り受検数<b>— / —</b></div></div>
+          <div class="main"><p class="m-title">新着の受検完了者</p><div class="m-tabs"><span class="on">求職者</span><span>自社社員</span></div><div class="m-lines"><i style="width:90%"></i><i style="width:70%"></i><i style="width:80%"></i></div></div>
+        </div></div>
+    </div>
+    <div class="row">
+      <div class="txt"><span class="num">2</span><div><p class="t">社員データと「優秀人材」タグを確認する<span class="who hr">人事</span></p><p class="d">活躍期待度は「優秀人材」タグの付いた社員、組織マッチ度は社員全体と<b>どれだけ似ているか</b>で計算されます。<b>スコアは学生が提出した時点の基準で固定</b>されるので、学生の受検より前に済ませます。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit 管理画面 ｜ 自社社員管理</span></div>
+        <div class="admin">
+          <div class="side"><div>ダッシュボード</div><div>受検管理</div><div>求職者管理</div><div class="on">自社社員管理</div><div>設定</div></div>
+          <div class="main"><p class="m-title">自社社員一覧</p>
+            <table class="m-table"><tr><th>名前</th><th>チーム</th><th>タグ</th></tr>
+              <tr class="hl"><td>社員A</td><td>IS</td><td><span class="m-tag req" style="background:var(--green-soft);color:var(--green)">優秀人材</span></td></tr>
+              <tr><td>社員B</td><td>CS</td><td>—</td></tr>
+              <tr class="hl"><td>社員C</td><td>CS</td><td><span class="m-tag req" style="background:var(--green-soft);color:var(--green)">優秀人材</span></td></tr>
+            </table></div>
+        </div></div>
+    </div>
+  </div>
+
+  <p class="phase">② 受検の作成と案内（人事面談のあと）</p>
+  <div class="rows">
+    <div class="row">
+      <div class="txt"><span class="num">3</span><div><p class="t">受検を作成する<span class="who hr">人事</span></p><p class="d">「受検管理」→「新規受検を作成する」。<br>タイトルは <b>PRIZMA｜28卒_営業</b> のように年度が分かる名前に。<br>受検対象者は<b>新卒社員（求職者）</b>（「自社社員」を選ぶと社員として登録されてしまいます）。<br>受検期間の締切は<b>2次面接の2営業日前</b>。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit 管理画面 ｜ 新規受検作成</span></div>
+        <div class="admin">
+          <div class="side"><div>ダッシュボード</div><div class="on">受検管理</div><div>求職者管理</div><div>自社社員管理</div><div>設定</div></div>
+          <div class="main"><p class="m-title">新規受検を作成する</p>
+            <div class="m-field"><label>タイトル</label><div class="m-input">PRIZMA｜28卒_営業</div></div>
+            <div class="m-field"><label>受検対象者</label><div class="m-input hl">新卒社員（求職者） ▾</div></div>
+            <div class="m-field"><label>受検期間</label><div class="m-input">◯/◯ 〜 ◯/◯（2次面接の2営業日前）</div></div>
+            <span class="m-btn">受検を作成する</span>
+          </div>
+        </div></div>
+    </div>
+    <div class="row">
+      <div class="txt"><span class="num">4</span><div><p class="t">案内文をコピーして送る<span class="who hr">人事</span></p><p class="d">受検依頼一覧の「案内コピー」で、企業ID・テストID入りの案内文が取れます。「学生の受検ワークフロー」タブのテンプレートに差し込んで送ります。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit 管理画面 ｜ 受検依頼一覧</span></div>
+        <div class="admin">
+          <div class="side"><div>ダッシュボード</div><div class="on">受検管理</div><div>求職者管理</div><div>自社社員管理</div><div>設定</div></div>
+          <div class="main"><p class="m-title">受検依頼一覧</p>
+            <table class="m-table"><tr><th>受検名</th><th>テストID</th><th>案内</th></tr>
+              <tr class="hl"><td>PRIZMA｜28卒_営業</td><td>自動発行</td><td><span class="m-btn ghost" style="padding:0 6px;font-size:.6rem">案内コピー</span></td></tr>
+            </table></div>
+        </div></div>
+    </div>
+  </div>
+
+  <p class="phase">③ 受検中</p>
+  <div class="rows">
+    <div class="row">
+      <div class="txt"><span class="num">5</span><div><p class="t">受検状況を確認し、未受検者にリマインドする<span class="who hr">人事</span></p><p class="d">ダッシュボードの「新着の受検完了者」（求職者タブ）か「求職者管理」で、誰が完了したかを確認します。締切の2日前に、未受検の学生へ連絡します。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit 管理画面 ｜ ダッシュボード</span></div>
+        <div class="admin">
+          <div class="side"><div class="on">ダッシュボード</div><div>受検管理</div><div>求職者管理</div><div>自社社員管理</div><div>設定</div></div>
+          <div class="main"><p class="m-title">新着の受検完了者</p><div class="m-tabs"><span class="on">求職者</span><span>自社社員</span></div>
+            <table class="m-table"><tr><th>名前</th><th>受検名</th><th>完了日</th></tr>
+              <tr><td>学生A</td><td>28卒_営業</td><td>◯/◯</td></tr><tr><td>学生B</td><td>28卒_営業</td><td>◯/◯</td></tr></table></div>
+        </div></div>
+    </div>
+  </div>
+
+  <p class="phase">④ 結果の確認と2次面接への受け渡し</p>
+  <div class="rows">
+    <div class="row">
+      <div class="txt"><span class="num">6</span><div><p class="t">求職者一覧で結果を確認する<span class="who sys">提出から約1時間</span></p><p class="d">「求職者管理」に、回答日・名前・活躍期待度・組織マッチ度が並びます。<b>どちらのスコアも「社員にどれだけ似ているか」で、高いほど優秀という意味ではありません。</b></p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit 管理画面 ｜ 求職者管理</span></div>
+        <div class="admin">
+          <div class="side"><div>ダッシュボード</div><div>受検管理</div><div class="on">求職者管理</div><div>自社社員管理</div><div>設定</div></div>
+          <div class="main"><p class="m-title">求職者一覧</p>
+            <table class="m-table"><tr><th>名前</th><th>活躍期待度</th><th>組織マッチ度</th><th></th></tr>
+              <tr class="hl"><td>学生A</td><td class="sc">—</td><td class="sc">—</td><td class="m-link">チャット</td></tr>
+              <tr><td>学生B</td><td class="sc">—</td><td class="sc">—</td><td class="m-link">チャット</td></tr></table></div>
+        </div></div>
+    </div>
+    <div class="row">
+      <div class="txt"><span class="num">7</span><div><p class="t">レポートを読む<span class="who hr">人事</span></p><p class="d">対象者をクリックすると3つのタブが開きます。<br><b>サマリーレポート</b>：全体像<br><b>面接対策</b>：面接で確認するとよい点（2次面接で使う中心資料）<br><b>詳細項目結果</b>：評価項目ごとのスコア</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit 管理画面 ｜ レポート</span></div>
+        <div class="mock-body">
+          <div class="m-row" style="justify-content:space-between"><p class="m-title">学生A のレポート</p><span class="m-btn ghost" style="padding:0 8px;font-size:.62rem">AIチャットへ</span></div>
+          <div class="m-tabs"><span>サマリーレポート</span><span class="on">面接対策</span><span>詳細項目結果</span></div>
+          <div class="m-paper"><p class="h">面接で確認したいポイント</p><p class="li">〇〇な場面での判断の仕方</p><p class="li">△△に対する考え方</p><p class="li">□□の経験について</p></div>
+        </div></div>
+    </div>
+    <div class="row">
+      <div class="txt"><span class="num">8</span><div><p class="t">必要に応じてAIチャットで深掘りする<span class="who hr">人事</span></p><p class="d">レポート右上から移動します。定型文アイコンからよくある質問を選べます。回数の制限はありません。<b>下の禁止事項は必ず守ってください。</b></p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>Altego Fit 管理画面 ｜ AIチャット</span></div>
+        <div class="mock-body">
+          <p class="m-title">学生A <span class="m-tag opt">求職者</span></p>
+          <div class="m-chat"><span class="q">チームで意見が割れたとき、どう動きますか？</span><span class="a">まずは……（AI人格の回答）</span><span class="q">締切が重なったら、何を優先しますか？</span></div>
+          <div class="m-input">質問を入力 ／ 定型文から選ぶ</div>
+        </div></div>
+    </div>
+    <div class="row">
+      <div class="txt"><span class="num">9</span><div><p class="t">2次面接の担当リクルーターに渡す<span class="who hr">人事</span></p><p class="d">「面接対策」タブの内容を中心に、2次面接の前日までに渡します。渡し方は下の「決めること」を参照してください。</p></div></div>
+      <div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i><span>2次面接 事前資料</span></div>
+        <div class="mock-body">
+          <div class="m-paper"><p class="h">学生A ／ 2次面接 ◯/◯</p><p class="m-muted">担当：リクルーター</p><p class="li">確認したいポイント①</p><p class="li">確認したいポイント②</p><p class="li">確認したいポイント③</p></div>
+        </div></div>
+    </div>
+  </div>
+
+  <div class="callout ng">
+    <strong>AIチャットで質問してはいけないこと</strong>
+    本籍・出生地、家族（職業・続柄・健康など）、住宅状況、生活環境、宗教、支持政党、人生観、尊敬する人物、思想、労働組合・学生運動、購読新聞・愛読書など、<b>厚労省が示す就職差別につながる14項目</b>に関わる質問はしないでください。AIに聞くこと自体が、職業安定法上の問題になりえます。
+  </div>
+  <div class="callout warn">
+    <strong>スコアを読むときの注意</strong>
+    活躍期待度・組織マッチ度は、集団から上に外れていても点が下がります。また、スコアが入社後の活躍と結びつくかはまだ検証されていません。Altego の結果は<b>2次面接で何を確かめるかを考えるための参考資料</b>で、合否は面接で判断します。
+  </div>
+
+  <h3>決めること</h3>
+  <ul class="list">
+    <li>リクルーターに管理画面のアカウントを発行するか、人事がレポートを書き出して渡すか</li>
+    <li>JOB選考・未来プレゼン・最終面接の担当者に、Altego の結果をどこまで見せるか</li>
+    <li>「優秀人材」タグをどの社員に付けるか（活躍期待度の基準になる）</li>
+    <li>回答画面のURL・企業IDなど、テンプレートの差し込み値</li>
+  </ul>
+</section>
+
+<footer>
+  出典：Altego Fit 仕様書 v1.1（03・12・15章）、デモアカウント操作ガイド 下書き v1.0。画面図は説明用に簡略化したイメージです。所要時間「30〜40分」は営業資料の表記で、実測値ではありません。作成日 2026-11-27。
+</footer>
+</div>
+
+<script>
+(function(){
+  var ids=['hr','student','ops'];
+  var tabs=ids.map(function(i){return document.getElementById('tab-'+i)});
+  function show(id,focus){
+    if(ids.indexOf(id)<0) id='hr';
+    ids.forEach(function(i,n){
+      var on=i===id;
+      document.getElementById(i).hidden=!on;
+      tabs[n].setAttribute('aria-selected',on?'true':'false');
+      tabs[n].tabIndex=on?0:-1;
+      if(on&&focus) tabs[n].focus();
+    });
+  }
+  tabs.forEach(function(t,n){
+    t.addEventListener('click',function(){
+      if(location.hash!=='#'+ids[n]) location.hash=ids[n]; else show(ids[n]);
+      var bar=document.querySelector('.tabs');
+      if(bar.getBoundingClientRect().top<=0) window.scrollTo({top:bar.offsetTop,behavior:'auto'});
+    });
+    t.addEventListener('keydown',function(e){
+      var k=e.key, m=n;
+      if(k==='ArrowRight') m=(n+1)%3; else if(k==='ArrowLeft') m=(n+2)%3; else return;
+      e.preventDefault(); location.hash=ids[m]; show(ids[m],true);
+    });
+  });
+  window.addEventListener('hashchange',function(){show(location.hash.slice(1))});
+  show(location.hash.slice(1));
+
+  document.getElementById('copy-btn').addEventListener('click',function(){
+    var btn=this, el=document.getElementById('tpl-text');
+    function done(){btn.textContent='コピーしました';setTimeout(function(){btn.textContent='コピー'},1800)}
+    function fallback(){var r=document.createRange();r.selectNodeContents(el);var s=window.getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='選択しました'}
+    try{navigator.clipboard.writeText(el.innerText).then(done,fallback)}catch(e){fallback()}
+  });
+})();
+</script>
+
+</body>
+</html>
